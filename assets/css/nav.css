@@ -1,0 +1,287 @@
+.sidebar-btn {
+    width: 20px;
+    height: 30px;
+    margin-top: 6px;
+}
+
+.crumb {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin: 4px 0;
+    background: #4a4a4a;
+}
+
+.sidebar-menu {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    overflow: hidden;
+    background: #00a651;
+    color: #ffffff;
+    z-index: 2;
+    padding: 10px 15px;
+    transform: translateX(800px);
+    transition: all 0.33s ease-in;
+}
+
+    .sidebar-menu.active {
+        transform: translateX(0px);
+        transition: all 0.33s ease-out;
+    }
+
+    .sidebar-menu .sidebar-btn {
+        height: 20px;
+        margin: 10px 10px;
+    }
+
+    .sidebar-menu .crumb {
+        background: #ffffff;
+    }
+
+        .sidebar-menu .crumb:first-child {
+            transform: rotate(45deg);
+        }
+
+        .sidebar-menu .crumb:last-child {
+            transform: rotate(-45deg);
+            position: relative;
+            top: -7px;
+        }
+
+    .sidebar-menu ul li {
+        display: block;
+    }
+
+        .sidebar-menu ul li a {
+            font-weight: 600;
+            font-size: 28px;
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .sidebar-menu ul li:first-child a {
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+
+    /*.sidebar-menu .avatar {
+        width: 50px;
+        height: 50px;
+        top: 12px;
+        margin-right: 10px;
+    }*/
+
+.homepage-nav {
+    margin-top: 15px;
+}
+
+    .homepage-nav a {
+        margin: 5px 10px;
+        color: #2a2a2a;
+        font-size: 14px;
+    }
+
+        .homepage-nav a:hover, .homepage-nav a:focus, .homepage-nav a:visited, .homepage-nav a:active {
+            text-decoration: none;
+        }
+
+.badge {
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    background: #fd5143;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    top: -12px;
+    right: 25px;
+    padding: 3px 0;
+    box-shadow: 0 1px 3px rgba(253, 81, 67, 0.3);
+}
+
+#user-secondary, #notification-secondary {
+    min-width: auto;
+    display: none;
+}
+
+#notification-secondary {
+    position: relative;
+    top: 14px;
+}
+
+#user-secondary {
+    padding-top: 0;
+    font-weight: 400;
+}
+
+#user .ico svg, #notification .ico svg {
+    position: relative;
+    top: 3px;
+}
+
+.avatar img{
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background: #cccccc;
+    border-radius: 18%;
+    /*position: relative;*/
+    padding: 1px;
+    border: 1px solid #ddd;
+    top: 10px;
+    left:15px;
+    right:15px;
+}
+
+.avatarbar img{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #cccccc;
+    border-radius: 50%;
+    /*position: relative;*/
+    padding: 1px;
+    border: 1px solid #ddd;
+    top: 10px;
+    left:15px;
+    right:15px;
+}
+
+/*media queries*/
+@media only screen and (min-width : 768px) {
+    header {
+        box-shadow: none;
+    }
+
+    .secondary-nav {
+        background: #00a651;
+        position: relative;
+        height: 45px;
+        z-index: 1;
+        box-shadow: 0px 5px 15px rgba(0, 166, 81, 0.35);
+    }
+
+        .secondary-nav ul {
+            height: 45px;
+            width: 100%;
+        }
+
+            .secondary-nav ul li {
+                position: relative;
+                height: inherit;
+            }
+
+                .secondary-nav ul li a {
+                    display: inline-block;
+                    height: inherit;
+                    padding: 10px 10px 0;
+                    font-weight: 800;
+                    text-align: center;
+                    min-width: 100px;
+                    color: #fafafa;
+                    margin-top: 0;
+                }
+
+                    .secondary-nav ul li a:focus, .secondary-nav ul li a:active, .secondary-nav ul li a:visited {
+                        text-decoration: none;
+                    }
+
+                    .secondary-nav ul li a:hover {
+                        text-decoration: none;
+                        border-bottom: 3px solid #fafafa;
+                    }
+
+                .secondary-nav ul li.pull-right a:hover {
+                    border-bottom: none;
+                }
+}
+
+
+/*dropdown*/
+.dropdown-list {
+    position: absolute;
+    z-index: 999;
+    background: #fafafa;
+    width: 180px !important;
+    padding: 5px 0 10px;
+    box-shadow: 0 2px 3px #aaaaaa;
+    display: none;
+}
+
+    .dropdown-list ul li {
+        display: block;
+        height: auto !important;
+        padding: 5px 10px;
+        font-weight: 600;
+        border-bottom: 1px solid #eeeeee;
+        cursor: pointer;
+    }
+
+        .dropdown-list ul li :hover {
+            background: #dddddd;
+        }
+
+        .dropdown-list ul li :last-child {
+            border-bottom: none;
+        }
+
+.dropdown-setting-list {
+    position: absolute;
+    z-index: 999;
+    background: #fafafa;
+    width: 205px !important;
+    padding: 5px 0 10px;
+    box-shadow: 0 2px 3px #aaaaaa;
+    display: none;
+}
+
+    .dropdown-setting-list ul li {
+        display: block;
+        height: auto !important;
+        padding: 5px 10px;
+        font-weight: 600;
+        border-bottom: 1px solid #eeeeee;
+        cursor: pointer;
+    }
+
+        .dropdown-setting-list ul li :hover {
+            background: #dddddd;
+        }
+
+        .dropdown-setting-list ul li :last-child {
+            border-bottom: none;
+        }
+
+
+.ldropdown-list {
+    position: absolute;
+    z-index: 999;
+    background: #fafafa;
+    width: 205px !important;
+    padding: 5px 0 10px;
+    box-shadow: 0 2px 3px #aaaaaa;
+    display: none;
+}
+
+    .ldropdown-list ul li {
+        display: block;
+        height: auto !important;
+        padding: 5px 10px;
+        font-weight: 600;
+        border-bottom: 1px solid #eeeeee;
+        cursor: pointer;
+    }
+
+        .ldropdown-list ul li :hover {
+            background: #dddddd;
+        }
+
+        .ldropdown-list ul li :last-child {
+            border-bottom: none;
+        }
