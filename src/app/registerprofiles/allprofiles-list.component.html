@@ -1,0 +1,219 @@
+<div style="font-size:12px">
+    <style>
+        .customBtn {
+            background: #e2e2e2;
+        }
+
+            .customBtn .fa-trash {
+                color: red;
+            }
+    </style>
+
+    <div class="row " style="margin-bottom:5px">
+        <a class="btn btn-warning" [routerLink]="['/profiles/add']">
+            Add Manual Entrys
+        </a>
+        <div class="col-md-2 pull-right">
+            <select class="form-control " [(ngModel)]="filter.registerType" name="registerType" required
+                    (change)="loadDashboardData()">
+                <option value="All" selected="selected">All</option>
+                <option value="IM">IM</option>
+                <option value="CM">CM</option>
+                <option value="PM">PM</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary" (click)="getProfilesFilter('OpenLeads')">
+            Open Leads
+            <span class="badge">{{openLeadsCount}}</span>
+        </a>
+
+        <a class="btn btn-danger" (click)="getProfilesFilter('TodaysFollowUp')">
+            Todays Followups
+            <span class="badge">{{todayFollowupCount}}</span>
+        </a>
+
+
+        <a class="btn btn-danger" (click)="getProfilesFilter('FollowUp')">
+            Followups
+            <span class="badge">{{followupCount}}</span>
+        </a>
+
+        <a class="btn btn-success" (click)="getProfilesFilter('Promise To Pay')">
+            PTP
+            <span class="badge">{{promiseToPayCount}}</span>
+        </a>
+
+        <a class="btn btn-success" (click)="getProfilesFilter('Lead Closed')">
+            Lead Closed
+            <span class="badge">{{leadClosedCount}}</span>
+        </a>
+
+
+        <a class="btn btn-warning" (click)="getProfilesFilter('All')">
+            All Status
+            <span class="badge">{{totalAllCount}}</span>
+        </a>
+
+
+    </div>
+    <div class="row " style="margin-top:15px; font-size:12px; font-weight:bold">
+        Selected Status :&nbsp; {{filter.status}}  &nbsp;    AllocatedTo :{{filter.allocatedTo}} <br />
+        Total No of Records :&nbsp; {{totalItems}} <br />
+        <!--<button (click)="clarfilter()">Clear Filter</button>-->
+    </div>
+
+
+    <hr />
+    <div>
+        <table class="table table-striped" width="80%">
+            <thead>
+                <tr>
+                    <th>Mat ID</th>
+                    <th>Name</th>
+                    <th>Looking For</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <!--<th>Created Date </th>-->
+                    <th>NextFollowupDate</th>
+                    <td></td>
+                    <th>AllocatedTo </th>
+
+                    <th>Status </th>
+
+                    <th *ngIf="filter.allocatedtoId === 0"></th>
+                    <th>CreatedDateTime</th>
+                    <th>CashType </th>
+                    <th>Duration </th>
+                    <th> Amount</th>
+                    <th> StartDate</th>
+                    <th> EndDate</th>
+                </tr>
+
+                <tr>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.MatId' style="width:100px" (keyup)="onSearch($event, 'MatId')" /></th>
+                    <th><input type='text' class="form-control" [(ngModel)]='filter.Name' style="width:100px" (keyup)="onSearch($event, 'Name')" /></th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.lookingFor' style="width:100px" (keyup)="onSearch($event, 'lookingFor')" /> </th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.MobileNo' style="width:100px" (keyup)="onSearch($event, 'MobileNo')" /> </th>
+                    <th><input type='text' class="form-control" [(ngModel)]='filter.EmailId' style="width:100px" (keyup)="onSearch($event, 'EmailId')" /> </th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.City' style="width:100px" (keyup)="onSearch($event, 'City')" />  </th>
+                    <th style="width:190px"> <my-date-picker name="NextFollowup" style="width:190px" [options]="myDatePickerOptions" [(ngModel)]="NextFollowup" (dateChanged)="onNextFollowupDateChanged($event)"></my-date-picker> </th>
+                    <th> </th>
+                    <th>
+                        <select *ngIf="filter.allocatedtoId === 0" class="form-control" [(ngModel)]="filter.allocatedto" style="width:120px" name="allocatedto" (change)="onSearch($event,'allocatedto')">
+                            <option value="">Select</option>
+                            <option *ngFor="let c of userList" [ngValue]="c.Name">{{c.Name}}</option>
+                        </select>
+
+                    <th>
+                        <select class="form-control " [(ngModel)]="filter.Status" name="Status" style="width:150px"
+                                (change)="onSearch($event,'Status')">
+                            <option value="" selected="selected">Select</option>
+                            <option value="Lead Closed">Lead Closed</option>
+                            <option value="Promise To Pay">Promise To Pay</option>
+                            <option value="FollowUp">FollowUp</option>
+                            <option value="Walkin">Walkin</option>
+                            <option value="Marriage Fixed">Marriage Fixed</option>
+                            <option value="Not Interested">Not Interested</option>
+                            <option value="Not Connected">Not Connected</option>
+                            <option value="RNR">RNR</option>
+                            <option value="Switched Off">Switched Off</option>
+                        </select>
+
+                    </th>
+
+                    <th *ngIf="filter.allocatedtoId === 0">   </th>
+                    <th> <my-date-picker name="CreatedDate" [options]="myDatePickerOptions" [(ngModel)]="CreatedDate" (dateChanged)="onCreatedDateChanged($event)"></my-date-picker>  </th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.CashType' style="width:100px" (keyup)="onSearch($event,'CashType')" />  </th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.Duration' style="width:100px" (keyup)="onSearch($event,'Duration')" /> </th>
+                    <th> <input type='text' class="form-control" [(ngModel)]='filter.Amount' style="width:100px" (keyup)="onSearch($event,'Amount')" /> </th>
+                    <th>  </th>
+                    <th>  </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of profiles">
+                    <td>{{x.Matid}}</td>
+                    <td> <a [routerLink]="['/profileleads',x.Id,'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>{{x.Name}}</a></td>
+                    <td>{{x.lookingfor}}</td>
+                    <td>{{x.Mobile}}</td>
+                    <td>{{x.Email}}</td>
+                    <td>{{x.City}}</td>
+
+                    <td>{{x.NextFollowupDate | dateFormat | date:'medium'}}</td>
+
+                    <td>{{x.RegisterType}}</td>
+                    <td>{{x.AllocatedTo}}</td>
+
+                    <td><a [routerLink]="['/followup',x.Id,'add']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>{{x.DispositionStatus}}</a></td>
+                    <td style="color:red" *ngIf="filter.allocatedtoId === 0">
+                        <!--<a  style="cursor:pointer"
+                                mwlConfirm
+                                [title]="Delete"
+                                [message]="message"
+                                placement="right"
+                                (confirm)="confirmClicked = true"
+                                (cancel)="cancelClicked = true"
+                         
+                                [(isOpen)]="isOpen">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>-->
+                        <a class="btn customBtn" (click)="modelConfirm(x.Id,x.Name)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+
+                        <!--<delete (deleteFun)="DeleteElement(Number)" [pk]='x.Id'></delete><br>-->
+                    </td>
+                    <td>{{x.CreatedDate | dateFormat | date:'medium' }}</td>
+                    <td>{{x.CashType}}</td>
+                    <td>{{x.PackageDuration}}</td>
+                    <td>{{x.Amount}}</td>
+                    <td>{{x.StartDate | dateFormat | date  }}</td>
+                    <td>{{x.EndDate | dateFormat | date }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+
+            <div class="text-center">
+                <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="20" [(ngModel)]="currentPage" class="pagination-sm"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+        </div>
+
+
+    </div>
+    <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1"
+         role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm"  *ngIf="IsShowDeletePopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  
+                    <h3> Do you want to delete this profile ?</h3>
+                </div>
+                <div class="modal-body">
+                    <form ngNoForm method="post">
+                        <div class="row">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" (click)="hideChildModal()">
+                                    <span aria-hidden="true">Cancel</span>
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)='removeprofile()' data-dismiss="modal">Delete</button>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

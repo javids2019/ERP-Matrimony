@@ -1,0 +1,62 @@
+﻿<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <ng2-slim-loading-bar></ng2-slim-loading-bar>
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" *ngIf="isAuthorize==false" [routerLink]="['/']">
+                <i class="fa fa-home fa-3x" aria-hidden="true"></i>
+            </a>-->
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="col-xs-9">
+                <ul class="nav navbar-nav">
+                    <li *ngIf="isAuthorize==true">
+                        <a [routerLink]="['/home']"><i class="fa fa-home fa-2x" aria-hidden="true">&nbsp; Home</i></a>
+                    </li>
+
+                    <li *ngIf="isAuthorize==true && role =='Admin'">
+                        <a [routerLink]="['/users']"><i class="fa fa-users fa-2x" aria-hidden="true">&nbsp; Users</i></a>
+                    </li>
+
+                    <li *ngIf="isAuthorize==true && role !='Admin' ">
+                        <a [routerLink]="['/profileleads']"><i class="fa fa-tasks fa-2x" aria-hidden="true">&nbsp;  Fresh Leads</i></a>
+                    </li>
+                    <li *ngIf="isAuthorize==true  && role =='Admin' ">
+                        <a [routerLink]="['/profileleads']"><i class="fa fa-calendar fa-2x" aria-hidden="true">&nbsp; All Leads</i></a>
+                    </li>
+                    
+                    <li *ngIf="isAuthorize==true"  >
+                        <a [routerLink]="['/salesleads']"><i class="fa fa-calendar fa-2x" aria-hidden="true">&nbsp; Sales Leads</i></a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-xs-3 pull right">
+                <ul class="nav navbar-nav ">
+                    <li class="" *ngIf="isAuthorize==true">
+                        <a title="Logout" style="cursor:pointer" (click)="logout()">
+                            <i class="fa fa-sign-out fa-2x" aria-hidden="true"> <span class="text-center">  Welcome {{loginuser.Name}}  </span>
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<br />
+<!-- Page Content -->
+<div style="margin-left:60px;margin-bottom:60px;margin-right:60px;margin-top:10px">
+    <router-outlet></router-outlet>
+</div>
+
+<simple-notifications [options]="nfyoptions"></simple-notifications>
+ 

@@ -1,0 +1,112 @@
+<form #adduserForm="ngForm" *ngIf="isLoaded" (ngSubmit)="login(adduserForm)" novalidate>
+    <div class="alert alert-danger" [hidden]="adduserForm.form.valid">
+
+        <ul *ngIf="Name.dirty && !Name.valid">
+            <li *ngIf="Name.errors.required">Name is required</li>
+        </ul>
+        <ul *ngIf="EmailId.dirty && !EmailId.valid">
+            <li *ngIf="EmailId.errors.required">EmailId is required</li>
+        </ul>
+        <ul *ngIf="Designation.dirty && !Designation.valid">
+            <li *ngIf="Designation.errors.required">Designation is required</li>
+        </ul>
+
+    </div>
+
+    <hr />
+    <div class="Col-md-4">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="user.Name" name="Name" #Name="ngModel" required />
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-envelope" aria-hidden="true"></i>Email Id</label>
+                    <input type="email" class="form-control" [(ngModel)]="user.EmailId" name="EmailId" #EmailId="ngModel" required />
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-paragraph" aria-hidden="true"></i>Designation</label>
+                    <input type="text" class="form-control" [(ngModel)]="user.Designation" name="Designation" #Designation="ngModel" required />
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i>Role</label>
+                    <select class="form-control" [(ngModel)]="user.Role" name="Role" required>
+                        <option value="">Select</option>
+                        <option *ngFor="let c of roleslist" [ngValue]="c.value">{{c.text}}</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4 selectContainer">
+                    <label class="control-label"><i class="fa fa-spinner" aria-hidden="true" required></i>IsActive</label>
+                    <select class="form-control" [(ngModel)]="user.IsActive" name="IsActive">
+                        <option value="">Select</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-key" aria-hidden="true"></i>Password</label>
+                    <input type="Password" class="form-control" [(ngModel)]="user.Password" name="Password" #Password="ngModel" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+           
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-key" aria-hidden="true"></i>TargetAmount</label>
+                    <input type="text" class="form-control" [(ngModel)]="user.TargetAmount" name="TargetAmount" #TargetAmount="ngModel" required />
+                </div>
+
+            </div>
+        </div>
+
+        <!--<hr />-->
+        <div>
+            <button type="button" class="btn btn-danger" (click)="back()">
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back
+            </button>
+            <button type="button" [disabled]="!adduserForm.form.valid" class="btn btn-default" (click)="manageUser(user)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Save
+            </button>
+        </div>
+    </div>
+    <!--<div class="panel panel-info">
+        <div class="panel-heading">Attendes</div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th><i class="fa fa-user" aria-hidden="true"></i>Name</th>
+                    <th><i class="fa fa-linkedin-square" aria-hidden="true"></i>Profession</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let attendee of user.attendees">
+                    <td [style.valign]="'middle'">
+                        <img class="img-thumbnail img-small" src="{{apiHost}}images/{{attendee.avatar}}" alt="attendee.name" />
+                    </td>
+                    <td [style.valign]="'middle'">{{attendee.name}}</td>
+                    <td [style.valign]="'middle'">{{attendee.profession}}</td>
+                    <td [style.valign]="'middle'">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeAttendee(attendee)"><i class="fa fa-user-times" aria-hidden="true"></i>Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+</form>

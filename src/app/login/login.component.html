@@ -1,0 +1,43 @@
+<form #addprofileForm="ngForm" (ngSubmit)="login(addprofileForm)" novalidate>
+
+    <!--<h1> Login Form</h1>-->
+    <!--<div class="logo"></div>
+    <div>
+
+        <input type="text" value="" placeholder="Username" id="username" />
+        <input type="password" value="" placeholder="Password" id="password" />
+        <button>Submit</button>
+    </div>-->
+
+    <br />
+    <br />
+    <div class="login-block">
+        <h1>Login</h1>
+        <span style="color:red;font-weight:bold">{{this.errorMsg}}</span><hr />
+        <div class="row Col-md-3">
+            <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Email Id</label>
+
+            <input id="username" type="email" class="form-control" [(ngModel)]="user.EmailId" name="EmailId"
+                   #EmailId="ngModel" maxlength="40" required />
+
+        </div>
+        <div class="row Col-md-3">
+            <label class="control-label"><i class="fa fa-lock" aria-hidden="true"></i>Password</label>
+            <input id="password" type="Password" class="form-control" [(ngModel)]="user.Password" name="Password" #Password="ngModel" maxlength="40" required />
+        </div>
+
+        <div class="row">
+
+            <button type="button" [disabled]="!addprofileForm.form.valid" class="btn btn-default" (click)="loginUser(user)">
+                Submit
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+    <!--<hr />-->
+
+</form>

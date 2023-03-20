@@ -1,0 +1,183 @@
+
+
+<form #addprofileForm="ngForm" *ngIf="isLoaded" (ngSubmit)="login(addprofileForm)" novalidate>
+
+    <h1> FollowUp Profile Entry</h1>
+    <!--<hr />-->
+
+    <div class="alert alert-danger" [hidden]="addprofileForm.form.valid">
+
+        <ul *ngIf="Name.dirty && !Name.valid">
+            <li *ngIf="Name.errors.required">Name is required</li>
+        </ul>
+        <ul *ngIf="lookingfor.dirty && !lookingfor.valid">
+            <li *ngIf="lookingfor.errors.required">lookingfor is required</li>
+        </ul>
+        <ul *ngIf="Mobile.dirty && !Mobile.valid">
+            <li *ngIf="Mobile.errors.required">Mobile is required</li>
+        </ul>
+
+    </div>
+
+
+    <div class="Col-md-4">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="profile.Name" name="Name"
+                           #Name="ngModel" maxlength="40" required disabled />
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-search-plus" aria-hidden="true"></i>looking For</label>
+                    <input type="text" class="form-control" [(ngModel)]="profile.lookingfor" name="lookingfor" #lookingfor="ngModel" maxlength="40" required disabled />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-mobile-phone" aria-hidden="true"></i>Mobile</label>
+                    <input type="text" class="form-control" [(ngModel)]="profile.Mobile" name="Mobile" #Mobile="ngModel" maxlength="12" required disabled />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-envelope-o" aria-hidden="true"></i>Email</label>
+                    <input type="email" class="form-control" [(ngModel)]="profile.Email" name="Email" #Email="ngModel" maxlength="40" required disabled />
+                </div>
+
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i> City</label>
+                    <input type="text" class="form-control" [(ngModel)]="profile.City" name="City" #City="ngModel" maxlength="40" required disabled />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Mat Id</label>
+                    <input type="text" class="form-control" [(ngModel)]="profile.MatId" name="MatId" #Matid="ngModel" maxlength="40" required disabled />
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i> Next Followup Date</label>
+                    <input class="picker-input form-control" [value]="profile.NextFollowupDate | date:'medium'" [returnObject]="'string'" [(ngModel)]="profile.NextFollowupDate"
+                           dateTimePicker [viewFormat]="'YYYY-MM-DD HH:mm'" [ngModelOptions]="{standalone: true}" readonly>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i>Disposition Status</label>
+                    <select class="form-control" [(ngModel)]="profile.DispositionStatus" #DispositionStatus="ngModel" name="DispositionStatus">
+                        <option value="" selected>Select</option>
+                        <option *ngFor="let c of statuslist" [ngValue]="c.value">{{c.text}}</option>
+                    </select>
+                </div>
+
+                <div *ngIf="profile.DispositionStatus == 'Lead Closed'" class="col-md-4">
+                    <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i>Cash Type </label>
+                    <select class="form-control " [(ngModel)]="profile.CashType" #CashType="ngModel" name="CashType">
+                        <option value="" selected="selected">Select</option>
+                        <option value="DD">DD</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Online">Online</option>
+                        <option value="CollectOnDelivery">CollectOnDelivery</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" *ngIf="profile.DispositionStatus == 'Lead Closed'">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i> Package Durations</label>
+                    <select class="form-control" [(ngModel)]="profile.PackageDuration" (change)="onPackageSelection($event)" #PackageDuration="ngModel" name="PackageDuration">
+                        <option value="" selected>Select</option>
+                        <option *ngFor="let c of durationlist" [ngValue]="c.value">{{c.text}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i> Paid Amount</label>
+                    <input class="form-control" type="text" [(ngModel)]="profile.Amount" name="Amount" maxlength="10" #Amount="ngModel" />
+                </div>
+
+                <div class="col-md-3">
+                    <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i> Start Date</label>
+                    <input type="text" class="form-control" [ngModel]="profile.StartDate | date: 'MMM dd yyyy'"   name="StartDate" #StartDate="ngModel" disabled />
+                </div>
+
+                <div class="col-md-3">
+                    <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i> Expiry Date</label>
+                    <input type="text" class="form-control" [ngModel]="profile.EndDate | date: 'MMM dd yyyy'" name="EndDate" 
+                           #EndDate="ngModel" disabled />
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-md-10">
+                    <label class="control-label"><i class="fa fa-paragraph" aria-hidden="true"></i> Followup Remarks</label>
+                    <textarea class="form-control" [(ngModel)]="profile.Remarkes" name="Remarks" #Remarks="ngModel" style="height:200px" maxlength="400" required></textarea>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!--<hr />-->
+    <div>
+        <button type="button" class="btn btn-danger" (click)="back()">
+            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back
+        </button>
+        <button type="button" [disabled]="!addprofileForm.form.valid" class="btn btn-default" (click)="manageFollowup(profile)">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Save
+        </button>
+    </div>
+
+    <hr />
+    <div class="panel panel-info">
+        <div class="panel-heading">Followup</div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Next Followup Date</th>
+                    <th>Creaded Date</th> 
+                    <th>StartDate</th>
+                    <th>Expiry Date</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of followupprofiles">
+                    <td>{{x.DispositionStatus}}</td>
+                    <td>{{x.NextFollowupDate | dateFormat | date:'medium'}}</td>
+                    <td>{{x.FollowedDate | dateFormat | date}}</td>
+                    <td>{{x.StartDate| dateFormat | date}}</td>
+                    <td>{{x.EndDate| dateFormat | date}}</td>
+                    <td style="width:600px">{{x.Remarkes}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</form>

@@ -1,0 +1,448 @@
+﻿<div>
+    <style>
+        .card {
+            border-radius: 6px;
+            box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+            background-color: #FFFFFF;
+            color: #252422;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+            .card .card-content {
+                padding: 15px 15px 10px 15px;
+            }
+
+            .card .numbers {
+                text-align: right;
+            }
+
+        font-size: 1em; .card .stats {
+            color: #a49e93;
+            font-weight: 300;
+        }
+
+        .card .card-footer {
+            padding: 0 15px 15px;
+        }
+
+        .card .card-title, .card .stats, .card .category, .card .description, .card .social-line, .card .actions, .card .card-content, .card .card-footer, .card small, .card a {
+            position: relative;
+        }
+
+        paper-dashboard.css:8030 .card .card-title, .card .stats, .card .category, .card .description, .card .social-line, .card .actions, .card .card-content, .card .card-footer, .card small, .card a {
+            position: relative;
+        }
+    </style>
+    <form name="homeform">
+
+
+        <div class="container content">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div  >
+                                   
+                                    <div style="background-color:rgba(204, 197, 185, 0.5);color:darkslategray; border:1px solid ; font-weight:300" class="col-xs-12">
+                                            <h3  >Assalamu Alaikum&nbsp;<span style="font-weight:bold">"{{loginuserName}}"</span></h3>
+                                            <h4 >Welcome to ERP for IM, CM and PM </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label>Type </label>
+                    <select class="form-control " [(ngModel)]="filter.registerType" name="registerType"
+                            (change)="onSearch($event,'registerType')">
+                        <option value="All" selected="selected">All</option>
+                        <option value="IM">IM</option>
+                        <option value="CM">CM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-3" *ngIf="roleName === 'Admin'">
+                    <label>Employee </label>
+                    <select class="form-control" [(ngModel)]="filter.allocatedto" style="width:120px" name="allocatedto" (change)="onSearch($event,'allocatedto')">
+                        <option value="" selected="selected">Select</option>
+                        <option *ngFor="let c of userList" [ngValue]="c.Name">{{c.Name}}</option>
+                    </select>
+                </div>
+              
+                <div class="col-sm-3">
+                    <label>Start Date </label>
+                    <my-date-picker name="StartDate" [options]="myStarDatePickerOptions" [(ngModel)]="StartDate" (dateChanged)="onStartDateChanged($event)"></my-date-picker>
+                </div>
+
+                <div class="col-sm-3">
+                    <label>End Date </label>
+                    <my-date-picker name="EndDate" [options]="myEndDatePickerOptions" [(ngModel)]="EndDate" (dateChanged)="onEndDateChanged($event)"></my-date-picker>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{leadClosedCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Lead Closed Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+                                        {{walkinCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Walkin Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+                                        {{promiseToPayCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-timer"></i> Promise To Pay Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{CallReachableCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-timer"></i> Reachable Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{NotconnectedCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Not Connected Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{NotInterestedCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Not Interested Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{SwitchedOffCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Switched Off Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{CallNotReachableCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-timer"></i>Call Not Reachable Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{MarriageFixedCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Marriage Fixed Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{totalAllCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-timer"></i>All Counts
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{RNRCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                RNR Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{FollowupCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Followup Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+
+
+            <hr />
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{openLeadsCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Open Leads Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        {{todayFollowupCount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Todays Followups Count
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        ₹ {{TargetAmount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                Target Amount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-11">
+                                    <div class="numbers">
+
+                                        ₹ {{RemainingAmount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                            <div class="stats">
+                                ₹ Remaining Amount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!--<p>Copyright &copy; <a href="https://chsakell.com" target="_blank">chsakell's Blog</a></p>-->
+                </div>
+            </div>
+        </footer>
+    </form>
+</div>
